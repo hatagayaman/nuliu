@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+<!-- header -->
+<header>
+	<div id="top-logo">
+		<h1><a href="/"><img src="../image/nuliu_logo.jpg" width="auto;" height="40px"/></a></h1>
+	</div>
+	<!-- メインナビ -->
+	<nav id="main-nav">
+		<ul id="nav" style="overflow: hidden;">
+			<li><a href="/searchNew">最新動画</a></li>
+			<li><a href="/searchPopular">人気動画</a></li>
+			<li><a href="/contact">お問い合わせ</a></li>
+			<li>
+				<input type="text" id="nav-search" placeholder="好きな芸能人、アイドルで検索！" size="30" style=""/>
+				<a style="display:inline;" href="javascript:location.href='/search?word=' + document.getElementById('nav-search').value;">
+					<img src="../image/search_icon.png" style="position:relative;top:10px;width:27px;height:auto;"/>
+				</a>
+			</li>
+		</ul>
+	</nav>
+	<div id="sub-nav">
+<!-- 		<a href="/accountForm.html">会員登録</a> -->
+<!-- 		<a href="/loginForm.html">ログイン</a> -->
+<!-- 		<li sec:authorize="isAuthenticated()"><a href="/mypage">マイページ</a></li> -->
+		<span sec:authorize="isAuthenticated()"><a href="/logout">ログアウト</a></span>
+	</div>
+</header>
+
+	<section  layout:fragment="contents-side-bar" id="contents-side-bar">
+		<div id="side-bar-frame">
+			<h3 id="h3-category">カテゴリ一覧</h3>
+			<ul id="categorylist">
+				<li th:each="category : ${categoryList}">
+					<a th:href="${category.searchUrl}" th:text="${category.name} + ${category.count}"></a>
+				</li>
+			</ul>
+		</div>
+	</section>
+
+<footer>
+	<div id="footer-list-space">
+		<div class="footer-list" style="">
+			<h4 style="font-weight:bold;" id="">◆メニュー</h4>
+			<ul>
+				<li><a href="/">　TOP</a></li>
+				<li><a href="/searchNew">　最新動画</a></li>
+				<li><a href="/searchPopular">　人気動画</a></li>
+				<li><a href="/contact">　お問い合わせ</a></li>
+			</ul>
+		</div>
+		<div class="footer-list">
+
+			<h4 style="font-weight:bold;" id="">◆カテゴリ一覧</h4>
+			<ul id="footer-cate-ul">
+				<li th:each="category : ${categoryList}">
+					<a style="" th:href="${category.searchUrl}" th:text="'　' + ${category.name}"></a>
+				</li>
+			</ul>
+		</div>
+		<div class="footer-list" style="">
+			<h4 style="font-weight:bold;" id="">◆タグ・キーワード</h4>
+			<ul>
+				<li th:each="ftag : ${footerTagList}">
+					<a th:href="${ftag.searchUrl}" th:text="'　' + ${ftag.name}"></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div style="clear:both;"></div>
+	<div id="copyright">
+		<p id="copyright-word">Copyright (C) 2018 <b style="color:#FF3399;">H</b>atagaya <b style="color:#FF3399;">W</b>eb <b style="color:#FF3399;">M</b>edia All Rights Reserved.</p>
+	</div>
+</footer>
+</body>
+</html>

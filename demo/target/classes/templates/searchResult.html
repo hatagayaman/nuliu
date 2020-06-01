@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org "
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link rel="shortcut icon" th:href="@{/image/favicon.png}"/>
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet" href="../css/menu.css" />
+
+<meta charset="UTF-8" />
+<title>nuliu動画</title>
+</head>
+<style>
+#resulttitle {
+	font-size:1.5em;
+	color:#FF3399;
+}
+#movie-frame {
+	margin-bottom:20px;
+}
+#top-paging-space {
+	display:none;
+}
+.arrow-visible-pc {
+	visibility:hidden;
+}
+
+.paging-space-disp-none {
+	display:none;
+}
+#main-image-sp {
+	display:none;
+}
+#movie-frame {
+	padding:3px;
+	width:19%;
+	height:220px;
+	float:left;
+}
+
+@media (max-width: 1020px) and (min-width: 768px) {
+	#movie-frame {
+		width:32%;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	#movie-frame {
+		width:100%;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	#movie-frame {
+		width:100%;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	#girls-list {
+		width:98%;
+		margin auto:0;
+	}
+	#resulttitle {
+		font-size:1.0em;
+		width:90%;
+		margin: 0px auto;
+	}
+	#movie-list {
+		width:98%;
+		margin: 0 auto;
+	}
+	#top-paging-space {
+		display:block;
+	}
+	.arrow-visible {
+		visibility:hidden;
+	}
+	#main-image {
+		display:none;
+	}
+
+	#main-image-sp {
+		display:block;
+		width:100%;
+		height:auto;
+		margin-top:50px;
+	}
+}
+</style>
+<body>
+<!-- ヘッダー -->
+<header th:include="layout :: header"></header>
+
+<div th:replace="spheader :: spheader"></div>
+
+<!-- コンテンツスライダー -->
+<div id="content-slider">
+	<img src="../image/top_img_pc.jpg" id="main-image" alt=""/>
+	<img src="../image/top_img_sp.jpg" id="main-image-sp" alt=""/>
+</div>
+
+<!-- 未成年チェック -->
+<div id="u20-attention">
+	<p>当サイトは<b>18歳未満</b>の方の閲覧をお断りしています。<br/>
+	<a href="//www.yahoo.co.jp" target="_blank">⇒18歳未満の方はこちら</a></p><!-- どこのサイトに飛ばすかは検討 -->
+</div>
+
+<br/>
+
+<div id="contents-list">
+	<!-- カテゴリ一覧　サイドバー -->
+	<section id="contents-side-bar">
+		<div id="side-bar-frame">
+			<h3 id="h3-category">カテゴリ一覧</h3>
+			<ul id="categorylist">
+				<li th:each="category : ${categoryList}">
+					<a th:href="${category.searchUrl}" th:text="${category.name} + ${category.count}"></a>
+				</li>
+			</ul>
+			<!-- admax -->
+			<p>
+				<script src="//adm.shinobi.jp/s/4ac832ad66afffc76510972d1b17e413"></script>
+			<!-- admax -->
+			</p>
+		</div>
+	</section>
+
+	<!-- 動画一覧 -->
+	<section id="girls-list">
+		<!-- admax -->
+		<script src="//adm.shinobi.jp/s/340220db866ab4f041de9dc735ea4562"></script>
+		<!-- admax -->
+		<br/>
+		<!-- admax -->
+		<script src="//adm.shinobi.jp/s/b8d9772ea2b67982b64ac13415410a17"></script>
+		<!-- admax -->
+		<!-- admax -->
+		<script src="//adm.shinobi.jp/s/b191d8caf066ea0bd10e5b85e3ee6d9d"></script>
+		<!-- admax -->
+	<br/>
+<!--
+		<div id="search-space">
+			<form action="/search" method="get">
+				<input type="text" th:placeholder="動画検索" name="word" id="word" /><input type="submit" id="search-btn" value="検索"/>
+			</form>
+		</div>
+ -->
+ 		<div id="tag-list-space">
+			<h2>気になるタグ・キーワード</h2>
+			<div style="margin-top:5px;"></div>
+			<ul id="tag-list">
+				<li th:each="tag : ${tagList}"><a th:href="${tag.searchUrl}" th:text="${tag.name}"></a></li>
+			</ul>
+		</div>
+
+		<div class="shikiri"></div>
+
+		<p th:text="${resultTitle}" id="resulttitle"></p>
+
+		<div class="shikiri"></div>
+
+		<div class="paging-space" th:classappend="${pageFlag} ? '' : 'paging-space-disp-none'">
+			<span class="paging-arrow" th:classappend="${prePageFlag} ? '' : 'arrow-visible-pc'"><a th:href="${prePage}">＜前</a></span>
+				<select onchange="selectPage(this)">
+					<option th:selected="${currentPage}"
+							th:value="${currentPage}"
+							th:text="${currentPage}">
+					</option>
+					<option th:each="no : ${pageNoList}"
+							th:value="${no}"
+							th:text="${no}">
+					</option>
+				</select>&nbsp; / &nbsp;<span th:text="${totalPages}"></span>
+			<span class="paging-arrow" th:classappend="${nextPageFlag} ? '' :  'arrow-visible-pc'"><a th:href="${nextPage}">次＞</a></span>
+		</div>
+
+		<br />
+<div class="shikiri"></div>
+
+		<div id="movie-list" style="overflow:hidden;">
+			<div id="movie-frame" th:each="movie : ${movieList}" class="">
+				<a th:href="${movie.movieUrl}"><img th:src="${movie.imgUrl}" /></a>
+				<h4>
+					<a th:href="${movie.movieUrl}" th:text="${movie.title}"></a>
+				</h4>
+				<span id="viewcount" th:text="'視聴回数：' + ${movie.views} + ' 回'"></span>
+			</div>
+		</div>
+		<div class="shikiri"></div>
+
+		<div class="paging-space" th:classappend="${pageFlag} ? '' : 'paging-space-disp-none'">
+			<span class="paging-arrow" th:classappend="${prePageFlag} ? '' : 'arrow-visible-pc'"><a th:href="${prePage}">＜前</a></span>
+				<select onchange="selectPage(this)">
+					<option th:selected="${currentPage}"
+							th:value="${currentPage}"
+							th:text="${currentPage}">
+					</option>
+					<option th:each="no : ${pageNoList}"
+							th:value="${no}"
+							th:text="${no}">
+					</option>
+				</select>&nbsp; / &nbsp;<span th:text="${totalPages}"></span>
+			<span class="paging-arrow" th:classappend="${nextPageFlag} ? '' :  'arrow-visible-pc'"><a th:href="${nextPage}">次＞</a></span>
+		</div>
+		<div class="shikiri"></div>
+		<!-- admax -->
+		<script src="//adm.shinobi.jp/s/f9e8b9766d15c181cd6657b968bad247"></script>
+		<!-- admax -->
+		<!-- admax -->
+		<script src="//adm.shinobi.jp/s/95505c17eb9ebc6ab37f14715eb518a2"></script>
+		<!-- admax -->
+	</section>
+
+	<div class="shikiri"></div>
+
+</div>
+
+<div class="shikiri"></div>
+
+<br/>
+
+<!-- フッター -->
+<footer th:include="layout :: footer"></footer>
+<script src="../js/script.js"></script>
+</body>
+</html>

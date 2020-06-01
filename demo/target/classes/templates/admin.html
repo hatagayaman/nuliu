@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org "
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="../css/style.css" />
+
+<meta charset="UTF-8" />
+<title>管理者ページ</title>
+<style>
+	.content {
+		color:white;
+		width:100%;
+	}
+	section {
+		width:500px;
+		margin: auto;
+	}
+
+	h2 {font-size:1.3em;}
+	ul li a {color:white;}
+	#nav-section {
+		margin-top:50px;
+	}
+</style>
+</head>
+<body>
+<!-- ヘッダー -->
+<header th:include="layout :: header"></header>
+
+<div class="content">
+<section id="nav-section">
+	<ul>
+		<li><a href="/admin/movieForm">動画情報登録</a></li>
+		<li><a href="/admin/moviesource">サイト元から動画情報取得</a></li>
+		<li><a href="/admin/movielist">登録済みの動画リスト</a></li>
+	</ul>
+</section>
+
+<hr/>
+</div>
+<!--  -->
+
+<div class="shikiri"></div>
+
+<!-- フッター -->
+<footer th:include="layout :: footer"></footer>
+</body>
+</html>

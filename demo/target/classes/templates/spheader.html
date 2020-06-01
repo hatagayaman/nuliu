@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+<!-- header -->
+<div  th:fragment="spheader" id="sp-header">
+	<div id="nav-drawer">
+		<input id="nav-input" type="checkbox" class="nav-unshown"/>
+		<label id="nav-open" for="nav-input"><span></span></label>
+		<label class="nav-unshown" id="nav-close" for="nav-input"></label>
+		<div id="nav-content">
+			<div>
+				<h2>メニュー</h2>
+				<ul id="spheaderul">
+					<li><a href="/">TOP</a></li>
+					<li><a href="/contact">CONTACT</a></li>
+				</ul>
+			</div>
+			<div>
+				<form action="/search" method="get">
+					<input type="text" th:placeholder="芸能人、アイドルで検索" name="word" /><input type="submit" value="検索"/>
+				</form>
+			</div>
+			<br/>
+			<div>
+				<h2>カテゴリ</h2>
+				<ul id="spcatelist">
+					<li th:each="category : ${categoryList}">
+						<a th:href="${category.searchUrl}" th:text="${category.name} + ${category.count}"></a>
+					</li>
+				</ul>
+			</div>
+			<br/>
+			<div>
+				<h2>タグ</h2>
+				<ul id="sptaglist">
+					<li th:each="tag : ${tagList}"><a th:href="${tag.searchUrl}" th:text="${tag.name}"></a></li>
+				</ul>
+			</div>
+			<br />
+		</div>
+	</div>
+	<h1 id="sp-h1"><a href="/"><img src="../image/nuliu_logo.jpg" width="auto;" height="25px"/></a></h1>
+
+	<div class="shikiri"></div>
+</div>
+</body>
+</html>

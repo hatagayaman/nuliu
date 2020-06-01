@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org "
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<title>nuliu動画</title>
+<!-- <link rel="stylesheet" href="../css/bootstrap.min.css" /> -->
+
+<link rel="shortcut icon" th:href="@{/image/favicon.png}"/>
+
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet" href="../css/menu.css" />
+
+<link href="slick/slick-theme.css" rel="stylesheet" type="text/css"/>
+<link href="slick/slick.css" rel="stylesheet" type="text/css"/>
+
+</head>
+<style>
+#resulttitle {
+	font-size:1.5em;
+	color:#FF3399;
+}
+
+#movie-frame {
+	word-break : break-all;
+}
+
+#mottomiru:hover {
+	cursor : pointer;
+	border: thin solid #FF3399;
+	color:#FF3399;
+}
+#main-image-sp {
+	display:none;
+}
+.sp-inline-adv,.sp-inline-adv2 {
+	display:none;
+}
+@media screen and (max-width: 768px) {
+	#resulttitle {
+		font-size:1.2em;
+		margin: 0px auto;
+	}
+	#movie-list {
+		width:98%;
+		margin: 0 auto;
+	}
+	#girls-list {
+		width:98%;
+		margin: 0 auto;
+	}
+	#main-image {
+		display:none;
+	}
+
+	#main-image-sp {
+		display:block;
+		width:100%;
+		height:auto;
+		margin-top:50px;
+	}
+	.sp-inline-adv2 {
+		display:block;
+	}
+}
+</style>
+<body>
+<!-- ヘッダー -->
+<header th:include="layout :: header"></header>
+
+<div th:replace="spheader :: spheader"></div>
+
+<!-- コンテンツスライダー -->
+<div id="content-slider">
+	<img src="../image/top_img_pc.jpg" id="main-image" alt=""/>
+	<img src="../image/top_img_sp.jpg" id="main-image-sp" alt=""/>
+</div>
+
+<!-- 未成年チェック -->
+<div id="u20-attention">
+	<p>当サイトは<b>18歳未満</b>の方の閲覧をお断りしています。<br/>
+	<a href="https://www.jakuan.jp/" target="_self">⇒18歳未満の方はこちら</a></p><!-- どこのサイトに飛ばすかは検討 -->
+</div>
+<div class="">
+</div>
+<br/>
+<div id="contents-list">
+	<!-- カテゴリ一覧　サイドバー -->
+	<section id="contents-side-bar">
+		<div id="side-bar-frame">
+			<h3 id="h3-category">カテゴリ一覧</h3>
+			<ul id="categorylist">
+				<li th:each="category : ${categoryList}">
+					<a th:href="${category.searchUrl}" th:text="${category.name} + ${category.count}"></a>
+				</li>
+			</ul>
+			<br/>
+
+			<!-- admax -->
+			<p>
+				<script src="//adm.shinobi.jp/s/4212a20a85e04872282a9b3c421bf87d"></script>
+			</p>
+			<!-- admax -->
+
+			<br/>
+
+			<!-- admax -->
+			<p>
+				<script src="//adm.shinobi.jp/s/7879bf5b6b330eb373e2aa52d5209ca2"></script>
+			</p>
+			<!-- admax -->
+
+			<br/>
+
+			<!-- admax -->
+			<p>
+				<script src="//adm.shinobi.jp/s/2ab0b82258f4bb14db679a56b30fb2dd"></script>
+			</p>
+			<!-- admax -->
+
+			<br/>
+
+			<!-- admax -->
+			<p>
+				<script src="//adm.shinobi.jp/s/b6e818e8de6460ff11265f6bf62e331f"></script>
+			</p>
+			<!-- admax -->
+
+			<br/>
+
+
+		</div>
+	</section>
+
+	<!-- 動画一覧 -->
+	<section id="girls-list">
+		<!-- admax -->
+		<script src="//adm.shinobi.jp/s/340220db866ab4f041de9dc735ea4562"></script>
+		<!-- admax -->
+		<br/>
+		<!-- admax -->
+		<script src="//adm.shinobi.jp/s/b8d9772ea2b67982b64ac13415410a17"></script>
+		<!-- admax -->
+		<!-- admax -->
+		<script src="//adm.shinobi.jp/s/b191d8caf066ea0bd10e5b85e3ee6d9d"></script>
+		<!-- admax -->
+	<br/>
+		<!-- <h2 style="color:#F4FA58;font-weight:bold;width:100%;">注目動画！！</h2> -->
+		<div id="tag-list-space">
+			<h2>おすすめキーワード</h2>
+			<ul id="tag-list">
+				<li th:each="tag : ${tagList}"><a th:href="${tag.searchUrl}" th:text="${tag.name}"></a></li>
+			</ul>
+		</div>
+
+		<div class="shikiri"></div>
+
+		<div th:each="mMap : ${movieMap}">
+			<p th:text="${mMap.key}" id="resulttitle"></p>
+			<div id="movie-list" class="">
+				<div id="movie-frame" class="slider">
+					<div style="margin-right:5px;" th:each="movie : ${mMap.value}"  th:href="${movie.movieUrl}">
+						<a th:href="${movie.movieUrl}">
+							<img th:src="${movie.imgUrl}"/>
+						</a>
+						<h4>
+							<a th:href="${movie.movieUrl}" th:text="${movie.title}"></a>
+						</h4>
+						<span id="viewcount" th:text="'視聴回数：' + ${movie.views} + ' 回'"></span>
+					</div>
+				</div>
+			</div>
+			<div class="shikiri"></div>
+			<span id="mottomiru" th:onclick="'mottomiru(\'' + ${mMap.key} + '\');'"
+				style="display:block;text-align:center;border: thin solid #fff;padding:3px;font-size:1.2em;">もっと見る</span>
+			<br/>
+			<br/>
+		</div>
+		<div class="shikiri"></div>
+		<!-- admax -->
+		<script src="//adm.shinobi.jp/s/f9e8b9766d15c181cd6657b968bad247"></script>
+		<!-- admax -->
+		<!-- admax -->
+		<script src="//adm.shinobi.jp/s/95505c17eb9ebc6ab37f14715eb518a2"></script>
+		<!-- admax -->
+	</section>
+
+	<div class="shikiri"></div>
+</div>
+
+<div class="shikiri"></div>
+
+<br/>
+
+<!-- フッター -->
+<footer th:include="layout :: footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="slick/slick.min.js"></script>
+<script>
+$(function(){
+	$('.slider').slick({
+		autoplay:false,
+		slidesToShow:5,
+		infinite:false,
+		responsive:[
+			{
+				breakpoint: 1024,
+				settings:{
+					slidesToShow:5,
+				}
+			},
+			{
+				breakpoint: 768,
+				settings:{
+					slidesToShow:3,
+				}
+			},
+			{
+				breakpoint: 480,
+					settings:{
+					slidesToShow:2,
+				}
+			},
+		]
+	});
+});
+function mottomiru(title) {
+	if (title.indexOf('新着') != -1) {
+		location.href = (location.href + "searchNew");
+	} else if (title.indexOf('巨乳') != -1) {
+		location.href = (location.href + "searchCategory/1");
+	} else if (title.indexOf('人気') != -1) {
+		location.href = (location.href + "searchPopular");
+	} else if (title.indexOf('人妻') != -1) {
+		location.href = (location.href + "searchCategory/2");
+	} else if (title.indexOf('企画') != -1) {
+		location.href = (location.href + "searchCategory/3");
+	} else if (title.indexOf('素人') != -1) {
+		location.href = (location.href + "searchCategory/4");
+	} else if (title.indexOf('OL') != -1) {
+		location.href = (location.href + "searchCategory/5");
+	} else if (title.indexOf('ハメ撮り') != -1) {
+		location.href = (location.href + "searchCategory/6");
+	} else if (title.indexOf('オナニー') != -1) {
+		location.href = (location.href + "searchCategory/7");
+	} else if (title.indexOf('制服') != -1) {
+		location.href = (location.href + "searchCategory/8");
+	} else if (title.indexOf('野外') != -1) {
+		location.href = (location.href + "searchCategory/9");
+	} else if (title.indexOf('盗撮') != -1) {
+		location.href = (location.href + "searchCategory/10");
+	} else if (title.indexOf('レズ') != -1) {
+		location.href = (location.href + "searchCategory/11");
+	} else if (title.indexOf('ゲイ') != -1) {
+		location.href = (location.href + "searchCategory/12");
+	} else if (title.indexOf('海外') != -1) {
+		location.href = (location.href + "searchCategory/13");
+	} else if (title.indexOf('アニメ') != -1) {
+		location.href = (location.href + "searchCategory/14");
+	}
+}
+</script>
+</body>
+</html>

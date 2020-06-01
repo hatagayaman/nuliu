@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org "
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="../css/style.css" />
+
+<meta charset="UTF-8" />
+<title>管理者ページ</title>
+<style>
+	#movietable tr:hover {
+		background-color:#FF3399;
+	}
+	.movielist-btn:hover {
+		color:#FF3399;
+	}
+	.th-id {
+		width:5%;
+	}
+	.th-site {
+		width:5%;
+	}
+	.th-cate {
+		width:10%;
+	}
+	.th-title {
+		width:30%;
+	}
+	.th-tag {
+		width:15%;
+	}
+	.th-status,.th-edit,.th-tweet {
+		width:5%;
+	}
+	.th-tweet input {
+		width:100%;
+	}
+	.content {
+		color:white;
+		width:100%;
+	}
+	section {
+		width:95%;
+		margin: 0 auto;
+	}
+	h2 {font-size:1.3em;}
+	ul li a {color:white;}
+	#nav-section {
+		margin-top:50px;
+	}
+	@media screen and (max-width: 768px) {
+		.sp-no-view {
+			display:none;
+		}
+		.th-id {
+			width:15%;
+		}
+		.th-tag {
+			width:30%;
+		}
+		.th-status,.th-edit,.th-tweet {
+			width:10%;
+		}
+		.th-tweet input {
+			width:100%;
+		}
+		#search-text {
+			width:43%;
+		}
+		#id-btn{
+			width:15%;
+		}
+		#title-btn{
+			width:20%;
+		}
+		#tag-btn {
+			width:16%;
+		}
+	}
+</style>
+</head>
+<body>
+<!-- ヘッダー -->
+<header th:include="layout :: header"></header>
+<div class="content">
+<section id="nav-section">
+	<ul>
+		<li><a href="/admin/movieForm">動画情報登録</a></li>
+		<li><a href="/admin/moviesource">サイト元から動画情報取得</a></li>
+		<li><a href="/admin/movielist">登録済みの動画リスト</a></li>
+	</ul>
+</section>
+ <hr />
+
+<section>
+	<form method="get" action="/admin/movielist/search">
+	<p>
+		<input id="search-text" type="text" name="word"/>
+		<input id="id-btn" class="movielist-btn" type="submit" value="ID検索" />
+		<input id="title-btn" class="movielist-btn" type="submit" value="ﾀｲﾄﾙ検索" />
+		<input id="tag-btn" class="movielist-btn" type="submit" value="ﾀｸﾞ検索" />
+	</p>
+	</form>
+	<hr/>
+</section>
+
+<section>
+	<table border="1" id="movietable">
+		<tr>
+			<th class="th-id">ID</th>
+			<th class="th-site sp-no-view">動画元</th>
+			<th class="th-cate sp-no-view">カテゴリ</th>
+			<th class="th-title">タイトル</th>
+			<th class="th-tag">タグ</th>
+			<th class="th-status">ステータス</th>
+			<th class="th-edit"></th>
+			<th class="th-tweet"></th>
+		</tr>
+		<tr class="tr-data" th:each="movie : ${movieList}">
+			<td th:text="${movie.id}"></td>
+			<td  class="sp-no-view" th:text="${movie.originalSiteName}"></td>
+			<td  class="sp-no-view" th:text="${movie.categoryName}"></td>
+			<td ><span style="display:block;color:#FFFFFF;"><a style="color:#FFFFFF;" th:text="${movie.title}" th:href="${movie.movieUrl}"></a></span></td>
+			<td  class=""><span th:each="tag : ${movie.tagList}" th:text="${tag}"></span></td>
+			<td th:text="${movie.status}"></td>
+			<td>
+				<form method="get" action="/admin/movieForm">
+					<input class="movielist-btn" type="submit" value="編集" />
+					<input type="hidden" th:name="movieid" th:value="${movie.id}"/>
+				</form>
+			</td>
+			<td>
+				<input class="movielist-btn" type="button" value="新着"
+					th:onclick="'tweet(0,\'' + ${movie.id} + '\');'"/>
+				<input class="movielist-btn" type="button" value="注目"
+					th:onclick="'tweet(1,\'' + ${movie.id} + '\');'"/>
+			</td>
+		</tr>
+	</table>
+</section>
+<br/>
+
+<div class="shikiri"></div>
+</div>
+<!-- フッター -->
+<footer th:include="layout :: footer"></footer>
+<script src="../js/tweet.js"></script>
+</body>
+</html>

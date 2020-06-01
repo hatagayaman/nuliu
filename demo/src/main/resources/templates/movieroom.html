@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org "
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta name="description" content="" />
+<meta name="keywords" content="nuliu,アダルト,アダルト動画,アダルト映画"/>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link rel="shortcut icon" th:href="@{/image/favicon.png}"/>
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../css/menu.css" />
+
+<meta charset="UTF-8" />
+<title>nuliu動画</title>
+<style>
+#movie-section {
+	width: 70%;
+	float: left;
+}
+
+.movie-frame {
+	padding:3px;
+	width:19%;
+	height:220px;
+	float:left;
+}
+@media (max-width: 1020px) and (min-width: 768px) {
+	.movie-frame {
+		width:32%;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.movie-frame {
+		width:100%;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.movie-frame {
+		width:100%;
+	}
+}
+iframe {
+	width: 560px;
+	height: 315px;
+}
+
+@media screen and (max-width: 768px) {
+	#movie-section {
+		width: 100%;
+	}
+	iframe {
+		width: 99%;
+		height: auto;
+	}
+	#relatedmovie-space {
+		width:98%;
+		margin: 0 auto;
+	}
+	#new-movie-space {
+		display:none;
+	}
+}
+
+#movietitle {
+	width: 100%;
+	font-weight: bold;
+	font-size: 1.3em;
+}
+#space-for-fixe-header {
+	height:70px;
+}
+#room-tag-list {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+#room-tag-list li {
+	float:left;
+	margin-left:15px;
+	margin-bottom:5px;
+}
+#room-tag-list li a {
+	color:#FF3399;
+}
+
+</style>
+</head>
+<body>
+	<!-- ヘッダー -->
+	<header th:include="layout :: header"></header>
+
+	<div th:replace="spheader :: spheader"></div>
+
+	<div id="space-for-fixe-header"></div>
+
+	<!-- 動画一覧 -->
+	<div id="contents-list">
+
+		<!-- カテゴリ一覧　サイドバー -->
+		<section id="contents-side-bar">
+			<div id="side-bar-frame">
+				<h3>カテゴリ一覧</h3>
+				<ul id="categorylist">
+					<li th:each="category : ${categoryList}"><a
+						th:href="${category.searchUrl}"
+						th:text="${category.name} + ${category.count}"></a></li>
+				</ul>
+			</div>
+		</section>
+
+		<section id="girls-list">
+			<!-- admax -->
+			<script src="//adm.shinobi.jp/s/340220db866ab4f041de9dc735ea4562"></script>
+			<!-- admax -->
+			<br/>
+			<!-- admax -->
+			<script src="//adm.shinobi.jp/s/b8d9772ea2b67982b64ac13415410a17"></script>
+			<!-- admax -->
+			<!-- admax -->
+			<script src="//adm.shinobi.jp/s/b191d8caf066ea0bd10e5b85e3ee6d9d"></script>
+			<!-- admax -->
+		<br/>
+			<iframe th:src="${movie.originalLink}" frameborder="1"
+				allow="autoplay; encrypted-media" allowfullscreen="0"> </iframe>
+			<div id="screen-info">
+				<span th:text="${movie.title}" id="movietitle"></span> <br /> <span
+					th:text="'視聴回数：' + ${movie.views} + ' 回'"></span> <br /> <span
+					th:text="${movie.uDate}"></span> <br />
+				<p th:text="${movie.intro}"></p>
+				<div>
+					この動画のキーワード
+					<br/>
+					<ul id="room-tag-list">
+						<li th:each="tag : ${tagListById}"><a th:href="${tag.searchUrl}" th:text="${tag.name}"></a></li>
+					</ul>
+				</div>
+				<div class="shikiri"></div>
+				<hr />
+			</div>
+			<div class="shikiri"></div>
+			<!-- admax -->
+			<script src="//adm.shinobi.jp/s/75b5ffd92f2f9703779b5f5e0c22105a"></script>
+			<!-- admax -->
+			<br/>
+			<h2>おススメ・関連動画</h2>
+			<br />
+			<div id="relatedmovie-space" class="">
+				<div th:each="info : ${relatedList}" class="movie-frame">
+					<a th:href="${info.movieUrl}"><img th:src="${info.imgUrl}" /></a>
+					<h4>
+						<a th:href="${info.movieUrl}" th:text="${info.title}"></a>
+					</h4>
+					<span id="viewcount" th:text="'視聴回数：' + ${info.views} + ' 回'"></span>
+				</div>
+			</div>
+			<div class="shikiri"></div>
+			<!-- admax -->
+			<script src="//adm.shinobi.jp/s/f9e8b9766d15c181cd6657b968bad247"></script>
+			<!-- admax -->
+			<!-- admax -->
+			<script src="//adm.shinobi.jp/s/95505c17eb9ebc6ab37f14715eb518a2"></script>
+			<!-- admax -->
+		</section>
+	</div>
+
+	<div class="shikiri"></div>
+
+	<br />
+
+	<!-- フッター -->
+	<footer th:include="layout :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org "
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link rel="shortcut icon" th:href="@{/image/favicon.png}"/>
+<link rel="stylesheet" th:href="@{/css/style.css}"/>
+<link rel="stylesheet" href="../css/style.css" />
+
+<meta charset="UTF-8" />
+<title>管理者ページ</title>
+<style>
+	.content {
+		color:white;
+		width:100%;
+	}
+	section {
+		width:95%;
+		margin: auto;
+	}
+
+	h2 {font-size:1.3em;}
+	ul li a {color:white;}
+	#nav-section {
+		margin-top:50px;
+	}
+</style>
+</head>
+<body>
+<!-- ヘッダー -->
+<header th:include="layout :: header"></header>
+
+<div class="content">
+<section id="nav-section">
+	<ul>
+		<li><a href="/admin/movieForm">動画情報登録</a></li>
+		<li><a href="/admin/moviesource">サイト元から動画情報取得</a></li>
+		<li><a href="/admin/movielist">登録済みの動画リスト</a></li>
+	</ul>
+</section>
+
+<hr />
+
+<section>
+	<form action="/admin/moviesource/scraping">
+		<h2>動画取得</h2>
+		<p>
+			取得先
+			<br />
+			<select id="originalSite" name="originalSite">
+				<option th:each="site : ${siteList}" th:text="${site.name}" th:value="${site.code}"></option>
+			</select>
+		</p>
+		<p>
+			URL
+			<br/>
+			<input type="text" id="siteUrl" name="siteUrl" style="width:100%;" />
+		</p>
+		<br/>
+		<p>
+			<input type="submit" value="取得"/>
+		</p>
+	</form>
+	<hr />
+</section>
+
+<section>
+	<h2>取得結果</h2>
+	<form th:action="@{/admin/movieForm/insert}" th:object="${movieForm}" method="get">
+		<div th:if="${movie != null}">
+			<p>
+				サムネ
+				<br/>
+				<img th:src="${movie.imgUrl}" width="300" height="auto" />
+				<input type="text" style="width:100%;" id="imgUrl" name="imgUrl" th:value="${movie.imgUrl}" />
+			</p>
+			<br/>
+			<p>
+				動画
+				<br/>
+				<iframe th:src="${movie.originalLink}" frameborder="1"
+						allow="autoplay; encrypted-media" allowfullscreen="0"> </iframe>
+				<input type="text" style="width:100%;" id="originalLink" name="originalLink" th:value="${movie.originalLink}" />
+			</p>
+			<p>
+				動画元サイト
+				<br />
+				<select id="originalSite" name="originalSite">
+					<option th:each="site : ${siteList}"
+							th:text="${site.name}"
+							th:value="${site.code}"
+							th:selected="${movie.originalSite == site.code}">
+					</option>
+				</select>
+			</p>
+			<div id="screen-info">
+				<p>
+				カテゴリ1:
+				<br />
+					<select id="category1" name="category1">
+						<option th:each="category : ${categoryList}"
+								th:text="${category.name}"
+								th:value="${category.code}">
+						</option>
+					</select>
+				</p>
+				<br/>
+				<p>
+					タイトル：
+					<br />
+					<input type="text" style="width:100%;" name="title"/>
+				</p>
+				<br />
+				<p>
+					タグ：
+					<br />
+					<input type="text" style="width:100%;" name="tag"/>
+				</p>
+				<br />
+				<p>
+					内容：
+					<br />
+					<textarea  style="width:100%;" rows="3" name="intro"></textarea>
+				</p>
+				<p>
+					<select id="delFlg" name="delFlg">
+						<option th:each="delFlg : ${delFlgMap}"
+								th:text="${delFlg.value}"
+								th:value="${delFlg.key}"
+								th:selected="${movie.delFlg == delFlg.key}">
+						</option>
+					</select>
+				</p>
+			</div>
+			<input type="submit" value="登録" />
+		</div>
+	</form>
+</section>
+
+
+<br/>
+
+<!--  -->
+
+<div class="shikiri"></div>
+
+</div>
+<!-- フッター -->
+<footer th:include="layout :: footer"></footer>
+</body>
+</html>

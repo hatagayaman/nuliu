@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org "
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<link rel="shortcut icon" th:href="@{/image/favicon.png}"/>
+
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../css/menu.css" />
+
+<meta charset="UTF-8" />
+<title>nuliu動画</title>
+<style>
+	.content {
+		color:white;
+		width:100%;
+	}
+	section {
+		width:500px;
+		margin: auto;
+		margin-top:50px;
+	}
+
+	h2 {font-size:1.3em;}
+
+	@media screen and (max-width: 768px) {
+		section {
+			width:100%;
+			padding:15px;
+		}
+	}
+	p input, textarea {
+		width:90%;
+		margin-auto: 0px;
+	}
+</style>
+</head>
+<body>
+<!-- ヘッダー -->
+<header th:include="layout :: header"></header>
+<div th:replace="spheader :: spheader"></div>
+
+<section>
+	<form action="/contact/send"  method="post" th:object="${contactForm}">
+		<h2>お問い合わせフォーム</h2>
+		<br />
+		<div style="margin-auto:0;word-break : break-all;width:95%;">
+			nuliuをご利用いただきありがとうございます。
+			<br/>
+			「nuliu」とは中国語で「女性」という意味があります。
+			<img src="../image/nuliu_logo2.jpg" style="display:block;width:90%;height:auto;"/>
+			<br/>
+			健全で優良な女性動画サービスを目指すという理念のもと運営していきますので、お気軽にお問い合わせ下さい。
+			<br/>
+			<br/>
+			・広告掲載について
+			<br/>
+			・コンテンツについて
+			<br/>
+			などなど
+		</div>
+		<br/>
+		<p>
+			名前
+			<br />
+			<input type="text" size="50" id="name" name="name" th:field="*{name}" />
+			<br />
+			<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red"></span>
+		</p>
+		<br />
+		<p>
+			メールアドレス
+			<br />
+			<input type="text" size="50" id="email" name="email" th:field="*{email}"/>
+			<br />
+			<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red"></span>
+		</p>
+		<br />
+		<p>
+			件名
+			<br />
+			<input type="text" size="50" id="subject" name="subject" th:field="*{subject}"/>
+			<br />
+			<span th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}" style="color:red"></span>
+		</p>
+		<br />
+		<p>
+			内容
+			<br />
+			<textarea id="body"  name="body" cols="50" rows="5" th:field="*{body}"></textarea>
+			<br />
+			<span th:if="${#fields.hasErrors('body')}" th:errors="*{body}" style="color:red"></span>
+		</p>
+		<br />
+		<p>
+			<input type="submit" value="送信"/>
+		</p>
+	</form>
+</section>
+
+<br/>
+
+<!-- フッター -->
+<footer th:include="layout :: footer"></footer>
+</body>
+</html>

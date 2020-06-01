@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org "
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css" />
+<link rel="stylesheet" href="../css/style.css" />
+
+<meta charset="UTF-8" />
+<title>ログイン画面</title>
+<style>
+@media screen and (max-width: 768px) {
+	#login-form {
+		width:95%;
+		margin: 0 auto;
+	}
+
+	.login-form-text {
+		width: initial;
+		width:100%;
+		padding: initial;
+		padding: 1px;
+		font-size: initial;
+	}
+
+	#login-form-btn {
+		width: initial;
+		width:100%;
+		font-size: initial;
+		padding: initial;
+		padding: 1px;
+		color: #fff;
+		border-style: none;
+		background-color:#FF3399;
+	}
+}
+</style>
+</head>
+<body>
+<!-- ヘッダー -->
+<header th:include="layout :: header"></header>
+	<br/>
+	<br/>
+<form method="post" th:action="@{/login}" id="login-form">
+	<h3 id="form-midashi">ログインして下さい</h3>
+	<br/>
+	<p>
+		<input type="text" id="username" name="username" th:placeholder="ユーザ名、またはメールアドレス" class="login-form-text" autofocus="autofocus"/>
+	</p>
+	<br/>
+	<p>
+		<input type="text" id="password" name="password" th:placeholder="パスワード" class="login-form-text"/>
+	</p>
+	<br/>
+	<p>
+		<button type="submit" class="" id="login-form-btn">ログイン</button>
+	</p>
+</form>
+<br/>
+<br/>
+<br/>
+
+<!-- フッター -->
+<footer th:include="layout :: footer"></footer>
+</body>
+</html>
